@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/INebotov/JustNets/backend/config"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,7 +18,7 @@ type MyLog struct {
 func (l *MyLog) Init(logFolder string, Prefix string) {
 	l.Prefix = Prefix
 	var log = logrus.New()
-	logFile := logFolder + "/" + l.Prefix + "-" + string(time.Now().Format("20060102150405")) + ".log"
+	logFile := fmt.Sprintf(config.GetLogPath(), logFolder, l.Prefix, string(time.Now().Format("20060102150405")))
 	var file, err = os.Create(logFile)
 	if err != nil {
 		fmt.Println("Prefix - Could Not Open Log File : " + err.Error())

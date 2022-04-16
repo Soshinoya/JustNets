@@ -52,3 +52,7 @@ func GetDSN() (dsn string) {
 		getEnv("DB_TIMEZONE", "EETDST"))
 	return dsn + " dbname=%s"
 }
+
+func GetLogPath() string {
+	return getEnv("LOG_PATH", "C:\\Users\\Shirt\\Desktop\\JustNets\\logs") + "\\%s\\%s-%s.log"
+}

@@ -1,2 +1,4 @@
-backend\preview-api\.env
-backend\preview-api\db_logs\*
+backend/preview-api/.env
+logs/*
+.vscode/*
+backend/preview-api/emails.db
