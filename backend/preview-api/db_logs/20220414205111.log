@@ -1,0 +1,1 @@
+{"level":"error","msg":"Cant connect to db ( Error: [failed to connect to `host=localhost user=root database=%s`: dial error (dial tcp 127.0.0.1:5432: connectex: No connection could be made because the target machine actively refused it.)] )","time":"2022-04-14T20:51:15+03:00"}

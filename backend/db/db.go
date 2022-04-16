@@ -1,6 +1,8 @@
 package db
 
 import (
+	"github.com/INebotov/JustNets/backend/config"
+	"github.com/INebotov/JustNets/backend/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -9,17 +11,18 @@ type DataBase struct {
 	DB *gorm.DB
 }
 
-func Init() {
-	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+func (database *DataBase) Init() {
+	log := logger.MyLog{}
+	log.Init("db_logs")
+	dsn := config.GetDSN()
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
-		// TODO : Loger process
+		log.LogFatal("Cant connect to db ( Error: %s )", err)
 	}
-
-	//db.AutoMigrate()
+	log.LogInfo("Sucsessfly connected to DB!")
+	database.DB = db
 }
 
-func (database *DataBase) GetDSN() string {
+func (database *DataBase) ExecSQL(command string) {
 
 }
