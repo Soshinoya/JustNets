@@ -1,16 +1,29 @@
 package main
 
-import "github.com/INebotov/JustNets/backend/db"
+import (
+	"github.com/INebotov/JustNets/backend/handlers"
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
+	r := gin.Default()
+	h := handlers.Handlers{}
+	h.Init()
 
-	// r := gin.Default()
-	// r.GET("/ping", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"message": "pong",
-	// 	})
-	// })
-	// r.Run()
-	db := db.DataBase{}
-	db.Init()
+	r.GET("/ping", h.Ping)
+
+	notSpam := r.Group("/")
+	notSpam.Use(h.NotSpam())
+	{
+		r.POST("/addemail", h.AddEmail)
+
+		authorized := r.Group("/private")
+		authorized.Use(h.HaveAcess())
+		{
+			authorized.GET("/getmails", h.GetEmail)
+		}
+
+	}
+
+	r.Run()
 }

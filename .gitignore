@@ -1,1 +1,2 @@
 backend\preview-api\.env
+backend\preview-api\db_logs\*

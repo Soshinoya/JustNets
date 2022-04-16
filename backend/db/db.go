@@ -4,25 +4,32 @@ import (
 	"github.com/INebotov/JustNets/backend/config"
 	"github.com/INebotov/JustNets/backend/logger"
 	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 type DataBase struct {
-	DB *gorm.DB
+	DB    *gorm.DB
+	DEBUG bool
+	log   logger.MyLog
 }
 
 func (database *DataBase) Init() {
-	log := logger.MyLog{}
-	log.Init("db_logs")
-	dsn := config.GetDSN()
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.LogFatal("Cant connect to db ( Error: %s )", err)
+	database.log = logger.MyLog{}
+	database.log.Init("db_logs", "DataBase")
+	if database.DEBUG == true {
+		db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+		if err != nil {
+			database.log.LogFatal("Cant connect to db ( Error: %s )", err)
+		}
+		database.DB = db
+	} else {
+		dsn := config.GetDSN()
+		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		if err != nil {
+			database.log.LogFatal("Cant connect to db ( Error: %s )", err)
+		}
+		database.DB = db
 	}
-	log.LogInfo("Sucsessfly connected to DB!")
-	database.DB = db
-}
-
-func (database *DataBase) ExecSQL(command string) {
-
+	database.log.LogInfo("Sucsessfly connected to DB!")
 }
