@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/INebotov/JustNets/backend/config"
-	"github.com/INebotov/JustNets/backend/datastructs"
 	"github.com/INebotov/JustNets/backend/logger"
 	"github.com/glebarez/sqlite"
 	"gorm.io/driver/postgres"
@@ -38,6 +37,5 @@ func (database *DataBase) Init(dbname string, m ...interface{}) {
 		database.DB.AutoMigrate(el)
 	}
 
-	database.DB.Create(&datastructs.SubscriberEmail{Email: "bla"})
 	database.log.LogInfo("Sucsessfly connected to DB %s!", dbname)
 }
