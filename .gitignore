@@ -1,0 +1,4 @@
+backend/preview-api/.env
+logs/*
+.vscode/*
+backend/preview-api/emails.db
