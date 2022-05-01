@@ -71,8 +71,8 @@ func (h *Handlers) AddEmail(c *gin.Context) {
 		})
 		return
 	}
-
-	r := h.DataBase.DB.First(&datastructs.SubscriberEmail{Email: email})
+	var eemail = datastructs.SubscriberEmail{Email: email}
+	r := h.DataBase.DB.Where("email = ?", email).First(&eemail)
 	if r.RowsAffected > 0 {
 		c.JSON(400, gin.H{
 			"status": "Already have this Email",
